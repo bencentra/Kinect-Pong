@@ -12,7 +12,7 @@ How To Play
 
 It's Pong; try and bounce the ball past your opponent's paddle without letting the ball get past yours.
 
-**Controls:**
+**Controls:**    
 1) Select the handedness of each player in the options on the left.    
 2) Stand in front of the Kinect. The player on the left is Player One (blue), the player on the right is
 Player Two (red).    
