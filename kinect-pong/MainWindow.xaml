@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="600" Width="900" Closing="MainWindow_Closing" Background="White">
     <Grid Background="#FFFFFAFF">
-        <Rectangle Name="rectangle1" Stroke="Black" Canvas.Left="-8" Canvas.Top="-7" Fill="Black" Margin="215,1,1,0" />
+        <Rectangle Name="rectangle1" Stroke="Black" Canvas.Left="-8" Canvas.Top="-7" Fill="Black" Margin="215,0,0,0" />
         <Rectangle Height="480" Name="rectangle2" Stroke="Black" Width="640" Fill="White" Canvas.Left="0" Canvas.Top="0" Margin="227,11,11,70" />
         <Image Height="480" Name="SkeletonImage" Stretch="Fill" Width="640" Margin="227,11,11,70" Opacity="0.5" />
         <Canvas Height="480" HorizontalAlignment="Left" Name="GameCanvas" VerticalAlignment="Top" Width="640" Margin="227,11,0,0" ClipToBounds="True">
