@@ -29,6 +29,10 @@ namespace kinect_pong
         private const int FRAME_RATE = 60;                          // Frame rate for the animation
         private const JointType HAND_RIGHT = JointType.HandRight;   // Int representing the right hand
         private const JointType HAND_LEFT = JointType.HandLeft;     // Int representing the left hand
+        private const int BALL_RADIUS = 50;                         // Radius of the ball
+        private const int PADDLE_WIDTH = 80;                        // Width of the paddles
+        private const int PADDLE_HEIGHT = 240;                      // Height of the paddles
+        private const int MARKER_RADIUS = 100;                      // Radius of the player markers
 
         // Instance of Kinect Helper, access to data streams and sensor properties
         private KinectHelper helper;
@@ -59,6 +63,7 @@ namespace kinect_pong
         private Point ballPos;
         private Vector ballFwd;
         private double ballSpd;
+        private double ballSpin;
 
         // Markers for the player skeletons
         private Ellipse markOne;
@@ -85,6 +90,10 @@ namespace kinect_pong
             helper.SkeletonDataChanged += this.SkeletonDataChanged;
             SkeletonImage.Source = helper.skeletonBitmap;
             rgbImage.Source = helper.colorBitmap;
+            // TESTING
+            Console.WriteLine();
+            Console.WriteLine("Canvas Height: " + GameCanvas.Height + "(" + GameCanvas.ActualHeight + ")");
+            Console.WriteLine("Skeleton Height: " + SkeletonImage.Height + "(" + SkeletonImage.ActualHeight + ")");
         }
 
         // Initialize a new game
@@ -114,19 +123,19 @@ namespace kinect_pong
             scoreTwoLabel.Content = playerTwoScore;
             // Initialize the ball
             ball = new Ellipse();
-            ball.Width = 25;
-            ball.Height = 25;
+            ball.Width = BALL_RADIUS;
+            ball.Height = BALL_RADIUS;
             ball.Stroke = new SolidColorBrush(Colors.Black);
-            ball.StrokeThickness = 2;
+            ball.StrokeThickness = 3;
             ball.Fill = new SolidColorBrush(Colors.Green);
             ResetBall();
             GameCanvas.Children.Add(ball);
             // Initialize the left paddle (Player One)
             playerOne = new Rectangle();
-            playerOne.Width = 40;
-            playerOne.Height = 120;
+            playerOne.Width = PADDLE_WIDTH;
+            playerOne.Height = PADDLE_HEIGHT;
             playerOne.Stroke = new SolidColorBrush(Colors.Black);
-            playerOne.StrokeThickness = 2;
+            playerOne.StrokeThickness = 3;
             playerOne.Fill = new SolidColorBrush(Colors.Blue);
             playerOnePos.X = MARGIN_OFFSET;
             playerOnePos.Y = GameCanvas.Height / 2 - playerOne.Height / 2;
@@ -134,10 +143,10 @@ namespace kinect_pong
             GameCanvas.Children.Add(playerOne);
             // Initialize the right paddle (Player Two)
             playerTwo = new Rectangle();
-            playerTwo.Width = 40;
-            playerTwo.Height = 120;
+            playerTwo.Width = PADDLE_WIDTH;
+            playerTwo.Height = PADDLE_HEIGHT;
             playerTwo.Stroke = new SolidColorBrush(Colors.Black);
-            playerTwo.StrokeThickness = 2;
+            playerTwo.StrokeThickness = 3;
             playerTwo.Fill = new SolidColorBrush(Colors.Red);
             playerTwoPos.X = GameCanvas.Width - playerTwo.Width - MARGIN_OFFSET;
             playerTwoPos.Y = GameCanvas.Height / 2 - playerTwo.Height / 2;
@@ -145,16 +154,16 @@ namespace kinect_pong
             GameCanvas.Children.Add(playerTwo);
             // Initialize player markers
             markOne = new Ellipse();
-            markOne.Width = 75;
-            markOne.Height = 75;
+            markOne.Width = MARKER_RADIUS;
+            markOne.Height = MARKER_RADIUS;
             markOne.Fill = new SolidColorBrush(Colors.Blue);
             markOne.Opacity = 0;
             markOnePos.X = GameCanvas.Width;
             markOnePos.Y = GameCanvas.Height;
             GameCanvas.Children.Add(markOne);
             markTwo = new Ellipse();
-            markTwo.Width = 75;
-            markTwo.Height = 75;
+            markTwo.Width = MARKER_RADIUS;
+            markTwo.Height = MARKER_RADIUS;
             markTwo.Fill = new SolidColorBrush(Colors.Red);
             markTwo.Opacity = 0;
             markTwoPos.X = GameCanvas.Width;
@@ -213,7 +222,7 @@ namespace kinect_pong
                     ballPos.X = playerOnePos.X + playerOne.Width + 3;
                     // Add some slight randomization to the ball's direction
                     double delta = (playerOnePos.Y - playerOnePosPast.Y)/GameCanvas.Height;
-                    ballFwd.Y += delta * 2;
+                    ballFwd.Y += delta * 6;
                     // Bounce the ball of the paddle
                     BounceBallHorizontal();
                 }
@@ -240,7 +249,7 @@ namespace kinect_pong
                     ballPos.X = playerTwoPos.X - ball.Width - 3;
                     // Add some slight randomization to the ball's direction
                     double delta = (playerTwoPos.Y - playerTwoPosPast.Y) / GameCanvas.Height;
-                    ballFwd.Y += delta * 2;
+                    ballFwd.Y += delta * ballSpin;
                     // Bounce the ball of the paddle
                     BounceBallHorizontal();
                 }
@@ -286,6 +295,8 @@ namespace kinect_pong
             double angle = direction * (rando.NextDouble() * 90 + 45);
             // Set the ball's direction
             ballFwd = new Vector(Math.Sin(angle * DEG_TO_RAD), Math.Cos(angle * DEG_TO_RAD));
+            // Set the ball's spin
+            ballSpin = spinSlider.Value;
         }
 
         // Begin the countdown before a new round begins
@@ -380,7 +391,9 @@ namespace kinect_pong
                 // If we're tracked figure out what side of the screen we're on
                 if (skel.TrackingState == SkeletonTrackingState.Tracked)
                 {
-                    Point position = helper.SkeletonPointToScreen(skel.Joints[JointType.ShoulderCenter].Position);
+                    //Point position = helper.SkeletonPointToScreen(skel.Joints[JointType.ShoulderCenter].Position);
+                    ColorImagePoint posTemp = helper.PointMapper.MapSkeletonPointToColorPoint(skel.Joints[JointType.ShoulderCenter].Position, ColorImageFormat.RgbResolution1280x960Fps12);
+                    Point position = new Point(posTemp.X, posTemp.Y);
                     // If the skeleton is the first on the left side of the screen, it is the left skeleton
                     if ((position.X > 0 && position.X <= GameCanvas.Width / 2) && left == null)
                         left = skel;
@@ -400,16 +413,20 @@ namespace kinect_pong
             else
             {
                 // Get the locations of the skeleton's head and hand
-                Point playerOneHand = helper.SkeletonPointToScreen(left.Joints[playerOneHandedness].Position);
-                Point playerOneHead = helper.SkeletonPointToScreen(left.Joints[JointType.Head].Position);
+                //Point playerOneHand = helper.SkeletonPointToScreen(left.Joints[playerOneHandedness].Position);
+                ColorImagePoint handTemp = helper.PointMapper.MapSkeletonPointToColorPoint(left.Joints[playerOneHandedness].Position, ColorImageFormat.RgbResolution1280x960Fps12);
+                Point playerOneHand = new Point(handTemp.X, handTemp.Y);
+                //Point playerOneHead = helper.SkeletonPointToScreen(left.Joints[JointType.Head].Position);
+                ColorImagePoint headTemp = helper.PointMapper.MapSkeletonPointToColorPoint(left.Joints[JointType.Head].Position, ColorImageFormat.RgbResolution1280x960Fps12);
+                Point playerOneHead = new Point(headTemp.X, headTemp.Y);
                 // Save the last position of player one's paddle
                 playerOnePosPast = playerOnePos;
                 // Update the position of player one's paddle
                 playerOnePos.Y = playerOneHand.Y - playerOne.Height / 2;
                 // Show and move the player's marker
-                markOne.Opacity = 1;
-                markOnePos.X = playerOneHead.X - markOne.Width / 2;
-                markOnePos.Y = playerOneHead.Y - markOne.Height / 2;
+                markOne.Opacity = .25;
+                markOnePos.X = playerOneHead.X - markOne.Width / 4;
+                markOnePos.Y = playerOneHead.Y - markOne.Height;
             }
 
             // If the right skeleton wasn't found, hide the marker
@@ -419,16 +436,20 @@ namespace kinect_pong
             else
             {
                 // Get the locations of the skeleton's head and hand
-                Point playerTwoHand = helper.SkeletonPointToScreen(right.Joints[playerTwoHandedness].Position);
-                Point playerTwoHead = helper.SkeletonPointToScreen(right.Joints[JointType.Head].Position);
+                //Point playerTwoHand = helper.SkeletonPointToScreen(right.Joints[playerTwoHandedness].Position);
+                ColorImagePoint handTemp = helper.PointMapper.MapSkeletonPointToColorPoint(right.Joints[playerTwoHandedness].Position, ColorImageFormat.RgbResolution1280x960Fps12);
+                Point playerTwoHand = new Point(handTemp.X, handTemp.Y);
+                //Point playerTwoHead = helper.SkeletonPointToScreen(right.Joints[JointType.Head].Position);
+                ColorImagePoint headTemp = helper.PointMapper.MapSkeletonPointToColorPoint(right.Joints[JointType.Head].Position, ColorImageFormat.RgbResolution1280x960Fps12);
+                Point playerTwoHead = new Point(headTemp.X, headTemp.Y);
                 // Save the last position of player two's paddle
                 playerTwoPosPast = playerTwoPos;
                 // Update the position of player one's paddle
                 playerTwoPos.Y = playerTwoHand.Y - playerTwo.Height / 2;
                 // Show and move the player's marker
-                markTwo.Opacity = 1;
-                markTwoPos.X = playerTwoHead.X - markTwo.Width / 2;
-                markTwoPos.Y = playerTwoHead.Y - markTwo.Height / 2;
+                markTwo.Opacity = .25;
+                markTwoPos.X = playerTwoHead.X - markTwo.Width / 4;
+                markTwoPos.Y = playerTwoHead.Y - markTwo.Height;
             }
 
             // Draw the markers separately from the rest of the game
@@ -562,6 +583,12 @@ namespace kinect_pong
                 gameLabel.Content = "";
                 startGameButton.Content = "Start Game";
             }
+        }
+
+        // Adjust the "spin" of the ball when colliding with a moving paddle
+        private void spinSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ballSpin = spinSlider.Value;
         }
     }
 }
