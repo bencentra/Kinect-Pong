@@ -9,28 +9,32 @@
         <Canvas Height="960" HorizontalAlignment="Left" Name="GameCanvas" VerticalAlignment="Top" Width="1280" Margin="577,24,0,0" ClipToBounds="True">
             
         </Canvas>
-        <Label Content="Kinect Pong" Height="84" HorizontalAlignment="Left" Margin="122,21,0,0" Name="label1" VerticalAlignment="Top" FontSize="48" FontWeight="Bold" />
-        <Label Content="Player One:" HorizontalAlignment="Left" Margin="617,991,0,8" Name="label2" FontSize="24" FontWeight="Bold" Foreground="White" />
-        <Label Content="Player Two:" FontSize="24" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,991,159,8" Name="label3" Foreground="White" />
-        <Label Content="0" Height="42" HorizontalAlignment="Right" Margin="0,991,1078,0" VerticalAlignment="Top" FontSize="24" Name="scoreOneLabel" Width="58" HorizontalContentAlignment="Center" Foreground="White" />
-        <Label Content="0" FontSize="24" Height="42" HorizontalAlignment="Left" Margin="1745,991,0,0" Name="scoreTwoLabel" VerticalAlignment="Top" Width="62" HorizontalContentAlignment="Center" Foreground="White" />
-        <Label Content="by Ben Centra" FontSize="24" FontWeight="Normal" Height="58" HorizontalAlignment="Left" Margin="183,112,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Kinect Pong" Height="100" HorizontalAlignment="Left" Margin="84,9,0,0" Name="label1" VerticalAlignment="Top" FontSize="64" FontWeight="Bold" />
+        <Label Content="Player One:" HorizontalAlignment="Left" Margin="587,990,0,9" Name="label2" FontSize="24" FontWeight="Bold" Foreground="White" />
+        <Label Content="Player Two:" FontSize="24" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,990,103,9" Name="label3" Foreground="White" />
+        <Label Content="0" Height="42" HorizontalAlignment="Left" Margin="718,990,0,0" VerticalAlignment="Top" FontSize="24" Name="scoreOneLabel" Width="58" HorizontalContentAlignment="Center" Foreground="White" />
+        <Label Content="0" FontSize="24" Height="42" HorizontalAlignment="Left" Margin="1824,990,0,0" Name="scoreTwoLabel" VerticalAlignment="Top" Width="62" HorizontalContentAlignment="Center" Foreground="White" />
+        <Label Content="by Ben Centra" FontSize="24" FontWeight="Normal" Height="58" HorizontalAlignment="Left" Margin="183,102,0,0" Name="label4" VerticalAlignment="Top" />
         <Image Height="300" HorizontalAlignment="Left" Margin="65,746,0,0" Name="rgbImage" Stretch="Fill" VerticalAlignment="Top" Width="400" Opacity="1" />
-        <Button Content="Start Game" Height="67" HorizontalAlignment="Left" Margin="136,176,0,0" Name="startGameButton" VerticalAlignment="Top" Width="250" FontSize="24" Click="startGameButton_Click" />
-        <Button Content="Pause Game" FontSize="24" Height="67" HorizontalAlignment="Left" Margin="136,270,0,0" Name="pauseGameButton" VerticalAlignment="Top" Width="250" Click="pauseGameButton_Click" />
-        <Label Content="Options:" FontSize="24" FontWeight="Bold" Height="51" HorizontalAlignment="Left" Margin="12,388,0,0" Name="label5" VerticalAlignment="Top" />
-        <Label Content="Winning Score:" FontSize="24" FontWeight="Normal" Height="49" HorizontalAlignment="Left" Margin="12,434,0,0" Name="label6" VerticalAlignment="Top" />
-        <TextBox Height="38" HorizontalAlignment="Left" Margin="190,0,0,602" Name="winningScoreBox" VerticalAlignment="Bottom" Width="140" Text="10" TextChanged="winningScoreBox_Changed" FontSize="20" />
-        <Label Content="Player One Handedness:" FontSize="24" FontWeight="Normal" Height="50" HorizontalAlignment="Left" Margin="12,488,0,0" Name="label7" VerticalAlignment="Top" />
-        <Label Content="Player Two Handedness:" FontSize="24" FontWeight="Normal" Height="50" HorizontalAlignment="Left" Margin="12,573,0,0" Name="label8" VerticalAlignment="Top" />
-        <RadioButton Content="Left" Height="34" HorizontalAlignment="Left" Margin="97,533,0,0" Name="playerOneLeftButton" VerticalAlignment="Top" GroupName="PlayerOneHandedness" Checked="playerOneLeftButton_Checked" FontSize="20" />
-        <RadioButton Content="Right" Height="34" HorizontalAlignment="Left" Margin="190,533,0,0" Name="playerOneRightButton" VerticalAlignment="Top" GroupName="PlayerOneHandedness" IsChecked="True" Checked="playerOneRightButton_Checked" FontSize="20" />
-        <RadioButton Content="Left" Height="32" HorizontalAlignment="Left" Margin="97,620,0,0" Name="playerTwoLeftButton" VerticalAlignment="Top" GroupName="PlayerTwoHandedness" Checked="playerTwoLeftButton_Checked" FontSize="20" />
-        <RadioButton Content="Right" Height="32" HorizontalAlignment="Left" Margin="190,620,0,0" Name="playerTwoRightButton" VerticalAlignment="Top" GroupName="PlayerTwoHandedness" IsChecked="True" Checked="playerTwoRightButton_Checked" FontSize="20" />
+        <Button Content="Start Game" Height="67" HorizontalAlignment="Left" Margin="136,160,0,0" Name="startGameButton" VerticalAlignment="Top" Width="250" FontSize="24" Click="startGameButton_Click" />
+        <Button Content="Pause Game" FontSize="24" Height="67" HorizontalAlignment="Left" Margin="136,244,0,0" Name="pauseGameButton" VerticalAlignment="Top" Width="250" Click="pauseGameButton_Click" />
+        <Label Content="Options:" FontSize="24" FontWeight="Bold" Height="51" HorizontalAlignment="Left" Margin="12,358,0,0" Name="label5" VerticalAlignment="Top" />
+        <Label Content="Winning Score:" FontSize="24" FontWeight="Normal" Height="49" HorizontalAlignment="Left" Margin="13,566,0,0" Name="label6" VerticalAlignment="Top" />
+        <TextBox Height="38" HorizontalAlignment="Left" Margin="191,0,0,470" Name="winningScoreBox" VerticalAlignment="Bottom" Width="140" Text="10" TextChanged="winningScoreBox_Changed" FontSize="20" />
+        <Label Content="Player One Handedness:" FontSize="24" FontWeight="Normal" Height="50" HorizontalAlignment="Left" Margin="12,401,0,0" Name="label7" VerticalAlignment="Top" />
+        <Label Content="Player Two Handedness:" FontSize="24" FontWeight="Normal" Height="50" HorizontalAlignment="Left" Margin="12,477,0,0" Name="label8" VerticalAlignment="Top" />
+        <RadioButton Content="Left" Height="34" HorizontalAlignment="Left" Margin="97,446,0,0" Name="playerOneLeftButton" VerticalAlignment="Top" GroupName="PlayerOneHandedness" Checked="playerOneLeftButton_Checked" FontSize="20" />
+        <RadioButton Content="Right" Height="34" HorizontalAlignment="Left" Margin="190,446,0,0" Name="playerOneRightButton" VerticalAlignment="Top" GroupName="PlayerOneHandedness" IsChecked="True" Checked="playerOneRightButton_Checked" FontSize="20" />
+        <RadioButton Content="Left" Height="32" HorizontalAlignment="Left" Margin="97,524,0,0" Name="playerTwoLeftButton" VerticalAlignment="Top" GroupName="PlayerTwoHandedness" Checked="playerTwoLeftButton_Checked" FontSize="20" />
+        <RadioButton Content="Right" Height="32" HorizontalAlignment="Left" Margin="190,524,0,0" Name="playerTwoRightButton" VerticalAlignment="Top" GroupName="PlayerTwoHandedness" IsChecked="True" Checked="playerTwoRightButton_Checked" FontSize="20" />
         <Label Name="gameLabel" Canvas.Left="415" Canvas.Top="393" HorizontalContentAlignment="Center" FontSize="36" Content="Click &quot;Start Game&quot; to Begin" Margin="444,325,-82,657" />
-        <Slider Height="26" HorizontalAlignment="Left" Margin="85,690,0,0" Name="spinSlider" VerticalAlignment="Top" Width="194" SmallChange="1" TickPlacement="TopLeft" IsSnapToTickEnabled="True" Value="5" ValueChanged="spinSlider_Changed" />
-        <Label Content="Spin:" FontSize="24" FontWeight="Normal" Height="49" HorizontalAlignment="Left" Margin="12,659,0,0" Name="label9" VerticalAlignment="Top" />
-        <Label Content="0" FontSize="18" FontWeight="Normal" Height="36" HorizontalAlignment="Left" Margin="81,659,0,0" Name="label10" VerticalAlignment="Top" Width="21" />
-        <Label Content="10" FontSize="18" FontWeight="Normal" Height="36" HorizontalAlignment="Left" Margin="261,659,0,0" Name="label11" VerticalAlignment="Top" Width="34" />
+        <Slider Height="26" HorizontalAlignment="Left" Margin="85,712,0,0" Name="spinSlider" VerticalAlignment="Top" Width="194" SmallChange="1" TickPlacement="TopLeft" IsSnapToTickEnabled="True" Value="4" ValueChanged="spinSlider_Changed" />
+        <Label Content="Spin:" FontSize="24" FontWeight="Normal" Height="49" HorizontalAlignment="Left" Margin="12,681,0,0" Name="label9" VerticalAlignment="Top" />
+        <Label Content="0" FontSize="18" FontWeight="Normal" Height="36" HorizontalAlignment="Left" Margin="81,681,0,0" Name="label10" VerticalAlignment="Top" Width="21" />
+        <Label Content="10" FontSize="18" FontWeight="Normal" Height="36" HorizontalAlignment="Left" Margin="261,681,0,0" Name="label11" VerticalAlignment="Top" Width="34" />
+        <Label Content="Starting Speed:" FontSize="24" FontWeight="Normal" Height="49" HorizontalAlignment="Left" Margin="12,625,0,0" Name="label12" VerticalAlignment="Top" />
+        <Slider Height="26" HorizontalAlignment="Left" IsSnapToTickEnabled="True" Margin="190,653,0,0" Name="speedSlider" SmallChange="2" TickPlacement="TopLeft" Value="4" VerticalAlignment="Top" Width="141" LargeChange="2" Maximum="8" Minimum="2" TickFrequency="2" ValueChanged="speedSlider_Changed" />
+        <Label Content="2" FontSize="18" FontWeight="Normal" Height="36" HorizontalAlignment="Left" Margin="186,624,0,0" Name="label13" VerticalAlignment="Top" Width="21" />
+        <Label Content="8" FontSize="18" FontWeight="Normal" Height="36" HorizontalAlignment="Left" Margin="316,624,0,0" Name="label14" VerticalAlignment="Top" Width="34" />
     </Grid>
 </Window>

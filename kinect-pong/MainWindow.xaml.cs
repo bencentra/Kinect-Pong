@@ -271,11 +271,13 @@ namespace kinect_pong
             {
                 ToggleStart();
                 gameLabel.Content = "Player One Wins!";
+                newBallTimer.Stop();
             }
             else if (playerTwoScore >= winScore)
             {
                 ToggleStart();
                 gameLabel.Content = "Player Two Wins!";
+                newBallTimer.Stop();
             }
         }
 
@@ -285,7 +287,7 @@ namespace kinect_pong
             // Set the ball's position to the center of the canvas
             ballPos = new Point(GameCanvas.Width / 2 - ball.Width / 2, GameCanvas.Height / 2 - ball.Height / 2);
             // Reset the ball's speed
-            ballSpd = 4;
+            ballSpd = speedSlider.Value;
             // Randomize the ball's direction and angle
             double direction = rando.NextDouble();
             if (direction > 0.5)
@@ -570,6 +572,8 @@ namespace kinect_pong
                 // Start the game thread
                 gameThread.Start();
                 gameLabel.Content = "";
+                // Disable the winning score field
+                winningScoreBox.IsEnabled = false;
                 startGameButton.Content = "End Game";
             }
             else
@@ -581,6 +585,9 @@ namespace kinect_pong
                 // End the game thread
                 gameThread.Abort();
                 gameLabel.Content = "";
+                newBallTimer.Stop();
+                // Enable the winning score field
+                winningScoreBox.IsEnabled = true;
                 startGameButton.Content = "Start Game";
             }
         }
@@ -589,6 +596,11 @@ namespace kinect_pong
         private void spinSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ballSpin = spinSlider.Value;
+        }
+
+        private void speedSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            ballSpd = speedSlider.Value;
         }
     }
 }
