@@ -426,7 +426,7 @@ namespace kinect_pong
                 // Update the position of player one's paddle
                 playerOnePos.Y = playerOneHand.Y - playerOne.Height / 2;
                 // Show and move the player's marker
-                markOne.Opacity = .25;
+                markOne.Opacity = .5;
                 markOnePos.X = playerOneHead.X - markOne.Width / 4;
                 markOnePos.Y = playerOneHead.Y - markOne.Height;
             }
@@ -449,7 +449,7 @@ namespace kinect_pong
                 // Update the position of player one's paddle
                 playerTwoPos.Y = playerTwoHand.Y - playerTwo.Height / 2;
                 // Show and move the player's marker
-                markTwo.Opacity = .25;
+                markTwo.Opacity = .5;
                 markTwoPos.X = playerTwoHead.X - markTwo.Width / 4;
                 markTwoPos.Y = playerTwoHead.Y - markTwo.Height;
             }
